@@ -15,6 +15,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Import;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -96,5 +97,20 @@ public class EmployeeController {
         log.info("员工分页查询，参数为：{}", employeePageQueryDTO);
         PageResult pageResult = employeeService.pageQuery(employeePageQueryDTO);
         return Result.success(pageResult);
+    }
+
+    /**
+     * 启用禁用员工账号
+     * 因为不是查询操作，不会返回非空data数据，所以可以不写泛型
+     * @param status
+     * @param id
+     * @return
+     */
+    @PostMapping("/status/{status}")
+    @ApiOperation("启用禁用员工账号")
+    public Result startOrStop(@PathVariable Integer status, Long id) {
+        log.info("启用禁用员工账号：{}，{}", status, id);
+        employeeService.startOrStop(status, id);
+        return Result.success();
     }
 }
