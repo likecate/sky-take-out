@@ -68,12 +68,13 @@ public class EmployeeController {
 
     /**
      * 退出
-     *
      * @return
      */
     @PostMapping("/logout")
     @ApiOperation("员工退出")
+    // TODO 员工退出功能
     public Result<String> logout() {
+
         return Result.success();
     }
 

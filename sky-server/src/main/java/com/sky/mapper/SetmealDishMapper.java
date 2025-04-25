@@ -15,9 +15,4 @@ public interface SetmealDishMapper {
     // select setmeal_id from setmeal_dish where dish_id in (1,2,3,4)
     List<Long> getSetmealIdsByDishId(List<Long> dishIds);
 
-    /**
-     * 根据菜品id集合批量删除关联的口味数据
-     * @param dishIds
-     */
-    void deleteByDishIds(List<Long> dishIds);
 }

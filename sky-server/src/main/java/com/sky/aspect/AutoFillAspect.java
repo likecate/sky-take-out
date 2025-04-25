@@ -84,7 +84,7 @@ public class AutoFillAspect {
             // 为2个公共字段赋值
             try {
                 // 获取方法
-                Method setUpdateTime = entity.getClass().getDeclaredMethod(AutoFillConstant.SET_CREATE_TIME, LocalDateTime.class);
+                Method setUpdateTime = entity.getClass().getDeclaredMethod(AutoFillConstant.SET_UPDATE_TIME, LocalDateTime.class);
                 Method setUpdateUser = entity.getClass().getDeclaredMethod(AutoFillConstant.SET_UPDATE_USER, Long.class);
 
                 // 通过反射为对象赋值
