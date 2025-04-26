@@ -8,7 +8,6 @@ import com.sky.dto.DishDTO;
 import com.sky.dto.DishPageQueryDTO;
 import com.sky.entity.Dish;
 import com.sky.entity.DishFlavor;
-import com.sky.entity.Employee;
 import com.sky.entity.Setmeal;
 import com.sky.exception.DeletionNotAllowedException;
 import com.sky.mapper.DishFlavorMapper;
@@ -18,8 +17,6 @@ import com.sky.mapper.SetmealMapper;
 import com.sky.result.PageResult;
 import com.sky.service.DishService;
 import com.sky.vo.DishVO;
-import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,7 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@Slf4j
 public class DishServiceImpl implements DishService {
 
     @Autowired
@@ -61,7 +57,7 @@ public class DishServiceImpl implements DishService {
         Long dishId = dish.getId();
 
         List<DishFlavor> flavors = dishDTO.getFlavors();
-        if (flavors != null && flavors.size() > 0) {
+        if (flavors != null && !flavors.isEmpty()) {
             flavors.forEach(dishflavor -> {
                 dishflavor.setDishId(dishId);
             });
@@ -180,7 +176,6 @@ public class DishServiceImpl implements DishService {
      */
     @Override
     @Transactional
-    @ApiOperation("菜品停售起售")
     public void startOrStop(Integer status, Long id) {
         // 修改dish表
        /* Dish dish = new Dish();
@@ -208,7 +203,17 @@ public class DishServiceImpl implements DishService {
                     setmealMapper.update(setmeal);
                 }
             }
-
         }
+    }
+
+    /**
+     * 根据分类id或菜品名称查询菜品
+     * @param categoryId
+     * @param name
+     * @return
+     */
+    @Override
+    public List<Dish> list(Long categoryId, String name) {
+        return dishMapper.list(categoryId, name);
     }
 }
