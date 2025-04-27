@@ -6,7 +6,7 @@
     <update id="update">
         update setmeal
         <set>
-            <if test="category_id != null">catgory_id = #{categoryId},</if>
+            <if test="categoryId != null">category_id = #{categoryId},</if>
             <if test="name != null">name = #{name},</if>
             <if test="price != null">price = #{price},</if>
             <if test="status != null">status = #{status},</if>
