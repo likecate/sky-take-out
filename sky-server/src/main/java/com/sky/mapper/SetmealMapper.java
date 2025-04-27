@@ -23,7 +23,7 @@ public interface SetmealMapper {
     Integer countByCategoryId(Long id);
 
     /**
-     * 根据id修改套餐数据
+     * 根据主键修改套餐数据
      * @param setmeal
      */
     @AutoFill(OperationType.UPDATE)
@@ -43,4 +43,18 @@ public interface SetmealMapper {
      * @return
      */
     Page<SetmealVO> pageQuery(SetmealPageQueryDTO setmealPageQueryDTO);
+
+    /**
+     * 根据主键查询套餐
+     * @return
+     */
+    @Select("select * from setmeal where id = #{id}")
+    Setmeal getById(Long id);
+
+    /**
+     * 根据套餐id集合批量删除套餐
+     * @param ids
+     * @return
+     */
+    void deleteByIds(List<Long> ids);
 }
