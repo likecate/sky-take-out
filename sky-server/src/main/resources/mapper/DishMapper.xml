@@ -48,7 +48,7 @@
         where id = #{id}
     </update>
 
-    <select id="list" resultType="Dish">
+    <select id="list" parameterType="Dish" resultType="Dish">
         select *
         from dish
         <where>
