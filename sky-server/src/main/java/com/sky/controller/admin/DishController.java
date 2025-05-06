@@ -42,10 +42,10 @@ public class DishController {
         log.info("新增菜品：{}", dishDTO);
         dishService.saveWithFlavor(dishDTO);
 
-        // 因为新增菜品默认是起售状态, 且容易获得分类id,所以精确清理
-        Long categoryId = dishDTO.getCategoryId();
+        // 因为新增菜品默认是停售状态, 所以不用清理
+        /*Long categoryId = dishDTO.getCategoryId();
         String key = "dish_" + categoryId;
-        cleanCache(key);
+        cleanCache(key);*/
 
         return Result.success();
     }
