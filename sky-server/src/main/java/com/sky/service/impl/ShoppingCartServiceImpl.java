@@ -123,19 +123,22 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
         List<ShoppingCart> list = shoppingCartMapper.list(shoppingCart);
 
-        // 只可能查到一条数据
-        ShoppingCart cart= list.get(0);
-        Integer number = cart.getNumber();
-        if (number > 1) {
-            cart.setNumber(cart.getNumber() - 1);
+        // 为了代码的健壮性, 因为可能用接口文档测试, 乱传参
+        if (list != null && list.size() > 0) {
+            // 只可能查到一条数据
+            ShoppingCart cart= list.get(0);
+            Integer number = cart.getNumber();
+            if (number > 1) {
+                cart.setNumber(cart.getNumber() - 1);
 
-            // 修改shoppingCart表数据
-            // update shoppingCart set number = ? where id = ?
-            shoppingCartMapper.updateNumberById(cart);
-        } else {
-            // 删除后有0个商品，所以直接删除
-            // delete from shopping_cart where id = ?
-            shoppingCartMapper.deleteById(cart.getId());
+                // 修改shoppingCart表数据
+                // update shoppingCart set number = ? where id = ?
+                shoppingCartMapper.updateNumberById(cart);
+            } else {
+                // 删除后有0个商品，所以直接删除
+                // delete from shopping_cart where id = ?
+                shoppingCartMapper.deleteById(cart.getId());
+            }
         }
 
     }
