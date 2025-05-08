@@ -1,5 +1,6 @@
 package com.sky.controller.admin;
 
+import com.sky.dto.OrdersConfirmDTO;
 import com.sky.dto.OrdersPageQueryDTO;
 import com.sky.dto.OrdersPaymentDTO;
 import com.sky.dto.OrdersSubmitDTO;
@@ -27,6 +28,7 @@ public class OrderController {
 
     /**
      * 订单搜索
+     *
      * @param ordersPageQueryDTO
      * @return
      */
@@ -40,6 +42,7 @@ public class OrderController {
 
     /**
      * 各个状态的订单数量统计
+     *
      * @return
      */
     @GetMapping("/statistics")
@@ -52,6 +55,7 @@ public class OrderController {
 
     /**
      * 查询订单详情
+     *
      * @param id
      * @return
      */
@@ -63,17 +67,17 @@ public class OrderController {
         return Result.success(orderVO);
     }
 
-   /* *//**
-     * 取消订单
-     * @param id
+    /**
+     * 接单
+     * @param ordersConfirmDTO
      * @return
-     *//*
-    @PutMapping("/cancel/{id}")
-    @ApiOperation("取消订单")
-    public Result<String> cancel(@PathVariable Long id) {
-        log.info("取消订单：{}", id);
-        orderService.userCancel(id);
+     */
+    @PutMapping("/confirm")
+    @ApiOperation("接单")
+    public Result<String> confirm(@RequestBody OrdersConfirmDTO ordersConfirmDTO) {
+        log.info("接单");
+        orderService.confirm(ordersConfirmDTO);
         return Result.success();
-    }*/
+    }
 
 }
