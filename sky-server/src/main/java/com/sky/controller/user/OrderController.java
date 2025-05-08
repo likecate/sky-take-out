@@ -78,4 +78,17 @@ public class OrderController {
         OrderVO orderVO = orderService.details(id);
         return Result.success(orderVO);
     }
+
+    /**
+     * 取消订单
+     * @param id
+     * @return
+     */
+    @PutMapping("/cancel/{id}")
+    @ApiOperation("取消订单")
+    public Result<String> cancel(@PathVariable Long id) {
+        log.info("取消订单：{}", id);
+        orderService.userCancel(id);
+        return Result.success();
+    }
 }
