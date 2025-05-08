@@ -72,7 +72,7 @@ public class OrderController {
     @PutMapping("/confirm")
     @ApiOperation("接单")
     public Result<String> confirm(@RequestBody OrdersConfirmDTO ordersConfirmDTO) {
-        log.info("接单");
+        log.info("接单: {}", ordersConfirmDTO);
         orderService.confirm(ordersConfirmDTO);
         return Result.success();
     }
@@ -85,8 +85,21 @@ public class OrderController {
     @PutMapping("/rejection")
     @ApiOperation("拒单")
     public Result<String> rejection(@RequestBody OrdersRejectionDTO ordersRejectionDTO) {
-        log.info("拒单");
+        log.info("拒单:{}", ordersRejectionDTO);
         orderService.rejection(ordersRejectionDTO);
+        return Result.success();
+    }
+
+    /**
+     * 取消订单
+     * @param ordersCancelDTO
+     * @return
+     */
+    @PutMapping("/cancel")
+    @ApiOperation("取消订单")
+    public Result<String> cancel(@RequestBody OrdersCancelDTO ordersCancelDTO) {
+        log.info("取消订单:{}", ordersCancelDTO);
+        orderService.adminCancel(ordersCancelDTO);
         return Result.success();
     }
 
