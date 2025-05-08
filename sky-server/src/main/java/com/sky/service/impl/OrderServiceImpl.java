@@ -335,6 +335,19 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void confirm(OrdersConfirmDTO ordersConfirmDTO) {
         // 修改订单状态为待派送
+
+        // 为了代码的健壮性
+        // 根据id查询订单
+        Orders ordersDB = orderMapper.getById(ordersConfirmDTO.getId());
+
+        // 校验订单是否存在，并且状态为2
+        if (ordersDB == null) {
+            throw new OrderBusinessException(MessageConstant.ORDER_NOT_FOUND);
+        }
+        if (!ordersDB.getStatus().equals(Orders.TO_BE_CONFIRMED)) {
+            throw new OrderBusinessException(MessageConstant.ORDER_STATUS_ERROR);
+        }
+
         // 构造Orders
         Orders orders = Orders.builder()
                 .id(ordersConfirmDTO.getId())
@@ -429,6 +442,34 @@ public class OrderServiceImpl implements OrderService {
                 .rejectionReason(ordersCancelDTO.getCancelReason())
                 .cancelTime(LocalDateTime.now())
                 .build();
+
+        // 修改数据
+        orderMapper.update(orders);
+    }
+
+    /**
+     * 派送订单
+     * @param id
+     */
+    @Override
+    public void delivery(Long id) {
+        // 将订单状态修改为“派送中”, 只有状态为“待派送”的订单可以执行派送订单操作
+        // 根据id查询订单
+        Orders ordersDB = orderMapper.getById(id);
+
+        // 校验订单是否存在，并且状态为3
+        if (ordersDB == null) {
+            throw new OrderBusinessException(MessageConstant.ORDER_NOT_FOUND);
+        }
+        if (!ordersDB.getStatus().equals(Orders.CONFIRMED)) {
+            throw new OrderBusinessException(MessageConstant.ORDER_STATUS_ERROR);
+        }
+
+        // 构造Orders
+        Orders orders = new Orders();
+        orders.setId(ordersDB.getId());
+        // 更新订单状态,状态转为派送中
+        orders.setStatus(Orders.DELIVERY_IN_PROGRESS);
 
         // 修改数据
         orderMapper.update(orders);
