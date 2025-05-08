@@ -5,6 +5,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.sky.constant.MessageConstant;
 import com.sky.context.BaseContext;
+import com.sky.controller.admin.OrderController;
 import com.sky.dto.OrdersPageQueryDTO;
 import com.sky.dto.OrdersPaymentDTO;
 import com.sky.dto.OrdersSubmitDTO;
@@ -17,6 +18,7 @@ import com.sky.result.PageResult;
 import com.sky.service.OrderService;
 import com.sky.utils.WeChatPayUtil;
 import com.sky.vo.OrderPaymentVO;
+import com.sky.vo.OrderStatisticsVO;
 import com.sky.vo.OrderSubmitVO;
 import com.sky.vo.OrderVO;
 import org.springframework.beans.BeanUtils;
@@ -303,5 +305,28 @@ public class OrderServiceImpl implements OrderService {
 
         // 将订单数据批量添加到购物车表中
         shoppingCartMapper.insertBatch(shoppingCarts);
+    }
+
+    /**
+     * 各个状态的订单数量统计
+     * @return
+     */
+    @Override
+    public OrderStatisticsVO statistics() {
+        // 统计待派送数量
+        Integer con = orderMapper.countStatus(Orders.CONFIRMED);
+
+        // 统计派送中数量
+        Integer del = orderMapper.countStatus(Orders.DELIVERY_IN_PROGRESS);
+
+        // 统计待接单数量
+        Integer tob = orderMapper.countStatus(Orders.TO_BE_CONFIRMED);
+
+        OrderStatisticsVO orderStatisticsVO = new OrderStatisticsVO();
+        orderStatisticsVO.setConfirmed(con);
+        orderStatisticsVO.setDeliveryInProgress(del);
+        orderStatisticsVO.setToBeConfirmed(tob);
+
+        return orderStatisticsVO;
     }
 }
