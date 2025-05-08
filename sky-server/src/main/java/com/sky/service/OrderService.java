@@ -31,11 +31,11 @@ public interface OrderService {
     void paySuccess(String outTradeNo);
 
     /**
-     * C端订单分页查询
+     * 订单分页查询
      * @param ordersPageQueryDTO
      * @return
      */
-    PageResult pageQueryAboutUser(OrdersPageQueryDTO ordersPageQueryDTO);
+    PageResult pageQuery(OrdersPageQueryDTO ordersPageQueryDTO);
 
     /**
      * 查询订单详情

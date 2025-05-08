@@ -175,12 +175,12 @@ public class OrderServiceImpl implements OrderService {
     }
 
     /**
-     * C端订单分页查询
+     * 订单分页查询
      * @param ordersPageQueryDTO
      * @return
      */
     @Override
-    public PageResult pageQueryAboutUser(OrdersPageQueryDTO ordersPageQueryDTO) {
+    public PageResult pageQuery(OrdersPageQueryDTO ordersPageQueryDTO) {
         PageHelper.startPage(ordersPageQueryDTO.getPage(), ordersPageQueryDTO.getPageSize());
 
         // 分页条件查询订单
