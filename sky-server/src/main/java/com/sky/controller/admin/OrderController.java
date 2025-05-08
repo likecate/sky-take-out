@@ -54,16 +54,16 @@ public class OrderController {
      * 查询订单详情
      * @param id
      * @return
-     *//*
-    @GetMapping("/orderDetail/{id}")
+     */
+    @GetMapping("/details/{id}")
     @ApiOperation("查询订单详情")
-    public Result<OrderVO> details(@PathVariable("id") Long id) {
+    public Result<OrderVO> details(@PathVariable Long id) {
         log.info("查询的订单id：{}", id);
         OrderVO orderVO = orderService.details(id);
         return Result.success(orderVO);
     }
 
-    *//**
+   /* *//**
      * 取消订单
      * @param id
      * @return
